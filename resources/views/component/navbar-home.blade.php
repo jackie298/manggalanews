@@ -2,23 +2,25 @@
         <!-- Header Start -->
        <div class="header-area">
             <div class="main-header"> 
-                <div  style="background-color: #ffffff" class="header-mid d-none d-md-block">
-                   <div class="container">
-                        <div class="row d-flex align-items-center">
+                <div class="header-mid d-none d-md-block">
+                    <div class="container">
+                        <div class="row align-items-center justify-content-between">
+                            <!-- Media Sosial -->
+                            <div class="col-auto social-icons">
+                                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                            </div>
+
                             <!-- Logo -->
-                            <div class="col-xl-3 col-lg-3 col-md-3">
-                                <div class="logo">
-                                    <a href="/"><img src="{{ asset('home/img/logo/manggalanews.png') }}" style="width: 150px;"  alt=""></a>
-                                </div>
-                            </div>
-                            <div class="col-xl-9 col-lg-9 col-md-9">
-                                <div class="header-banner f-right ">
-                                   <!-- Menampilkan iklan header -->
-                                    @include('app.partials.ads', ['position' => 'header'])
-                                </div>
-                            </div>
+                            <div class="col text-center">
+                                <a href="/">
+                                    <img src="{{ asset('home/img/logo/manggalanews.png') }}" alt="Manggala News Logo" class="logo-img">
+                                </a>
+                            </div>                            
                         </div>
-                   </div>
+                    </div>
                 </div>
                <div class="header-bottom header-sticky">
                     <div class="container">
@@ -26,7 +28,7 @@
                             <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
                                 <!-- sticky -->
                                     <div class="sticky-logo">
-                                        <a href="/"><img src="{{ asset('home/img/logo/manggalanews.png') }}" style="width: 200px;" alt=""></a>
+                                        <a href="/"><img src="{{ asset('home/img/logo/manggalanews.png') }}" style="width: 150px;" alt=""></a>
                                     </div>
                                 <!-- Main-menu -->
                                 <div class="main-menu d-none d-md-block">
