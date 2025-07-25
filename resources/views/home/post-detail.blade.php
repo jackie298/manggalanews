@@ -1,5 +1,15 @@
 @extends('layouts.home')
 
+@section('meta')
+    <meta property="og:title" content="{{ $post->title }}">
+    <meta property="og:description" content="{{ Str::limit(strip_tags($post->body), 100) }}">
+    <meta property="og:image" content="{{ url($post->image) }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="Manggala News">
+@endsection
+
+
 @section('content')
 <main>
     <div class="about-area">

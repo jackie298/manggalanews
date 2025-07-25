@@ -78,37 +78,37 @@
     <!-- Trending Area End -->
 
     <!--  Berita Berdasarkan Kategori -->
-    <div class="weekly-news-area pt-50">
-        <div class="container">
-           <div class="weekly-wrapper">
-                <!-- section Tittle -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-tittle mb-30">
-                            <h3>Berita Populer</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="weekly-news-active dot-style d-flex dot-style">
-                            @foreach ($mostViews as $mostView)
-                            <div class="weekly-single">
-                                <div class="weekly-img">
-                                    <img src="{{ Storage::url($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">
-                                </div>
-                                <div class="weekly-caption">
-                                    <span class="color1">{{ $mostView->category->name }}</span>
-                                    <h4><a href="{{ route('posts.show', $mostView->slug) }}">{{ $mostView->title }}</a></h4>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-           </div>
-        </div>
-    </div>
+    <!--<div class="weekly-news-area pt-50">-->
+    <!--    <div class="container">-->
+    <!--       <div class="weekly-wrapper">-->
+    <!--             section Tittle -->
+    <!--            <div class="row">-->
+    <!--                <div class="col-lg-12">-->
+    <!--                    <div class="section-tittle mb-30">-->
+    <!--                        <h3>Berita Populer</h3>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-12">-->
+    <!--                    <div class="weekly-news-active dot-style d-flex dot-style">-->
+    <!--                        @foreach ($mostViews as $mostView)-->
+    <!--                        <div class="weekly-single">-->
+    <!--                            <div class="weekly-img">-->
+    <!--                                <img src="{{ Storage::url($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">-->
+    <!--                            </div>-->
+    <!--                            <div class="weekly-caption">-->
+    <!--                                <span class="color1">{{ $mostView->category->name }}</span>-->
+    <!--                                <h4><a href="{{ route('posts.show', $mostView->slug) }}">{{ $mostView->title }}</a></h4>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                        @endforeach-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--       </div>-->
+    <!--    </div>-->
+    <!--</div>-->
     <!-- End Weekly-News -->
 
    <!-- Whats New Start -->

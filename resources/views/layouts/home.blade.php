@@ -6,6 +6,7 @@
         <title>Manggalanews</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        @yield('meta')
         <link rel="manifest" href="site.webmanifest">
         <link rel="shortcut icon" href="{{ asset('home/img/logo/manggalanews.png') }}" />
 
