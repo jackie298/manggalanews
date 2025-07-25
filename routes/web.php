@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BreakingNewsController;
 use App\Http\Controllers\CategoryController;
@@ -29,18 +29,24 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('layouts.home');
 // });
-
-Route::get('/storage-link', function() {
-	$targetFolder = base_path().'/storage/app/public';
-	$linkFolder =  $_SERVER['DOCUMENT_ROOT'].'/storage';
-
-	if (!file_exists($linkFolder)) {
-		symlink($targetFolder, $linkFolder);
-		return "Storage link successfully created!";
-	} else {
-		return "Storage link already exists!";
-	}
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage link created successfully.';
 });
+Route::get('/storage/{filename}', function ($filename) {
+    $path = storage_path('app/public/post/' . $filename);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    return response($file, 200)->header("Content-Type", $type);
+});
+
+
 
 Route::prefix('iklan')->name('iklan.')->middleware('auth')->group(function () {
     Route::get('/', [IklanController::class, 'index'])->name('index');

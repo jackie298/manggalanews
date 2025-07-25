@@ -95,7 +95,7 @@
                             @foreach ($mostViews as $mostView)
                             <div class="weekly-single">
                                 <div class="weekly-img">
-                                    <img src="{{ asset($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">
+                                    <img src="{{ Storage::url($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">
                                 </div>
                                 <div class="weekly-caption">
                                     <span class="color1">{{ $mostView->category->name }}</span>
