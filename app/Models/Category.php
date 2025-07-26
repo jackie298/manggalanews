@@ -15,6 +15,6 @@ class Category extends Model
     // relasi Category ke Post
     public function posts()
     {
-        return $this->hasMany(Post::class);
+        return $this->belongsToMany(Post::class);
     }
 }

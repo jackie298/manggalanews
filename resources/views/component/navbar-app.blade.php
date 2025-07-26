@@ -35,14 +35,14 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" href="{{ route('dashboard') }}">
-                <i class="mdi mdi-compass-outline menu-icon"></i>
+                <i class="mdi mdi-home-circle-outline menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#postingan" aria-expanded="false"
                 aria-controls="postingan">
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                <i class="mdi mdi-newspaper menu-icon"></i>
                 <span class="menu-title">Postingan</span>
                 <i class="menu-arrow"></i>
             </a>
@@ -60,7 +60,7 @@
         <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#iklan" aria-expanded="false"
                 aria-controls="iklan">
-                <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                <i class="mdi mdi-advertisements menu-icon"></i>
                 <span class="menu-title">Iklan</span>
                 <i class="menu-arrow"></i>
             </a>

@@ -1,15 +1,5 @@
 @extends('layouts.home')
 
-@section('meta')
-    <meta property="og:title" content="{{ $post->title }}">
-    <meta property="og:description" content="{{ Str::limit(strip_tags($post->body), 100) }}">
-    <meta property="og:image" content="{{ url($post->image) }}">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="Manggala News">
-@endsection
-
-
 @section('content')
 <main>
     <div class="about-area">
@@ -38,7 +28,7 @@
                                 @endif
                                 <div class="d-flex align-items-center mb-0">
                                     <i class="fas fa-solid fa-list mr-2"></i>
-                                    <p class="card-text mb-0" style="font-size: 12px"><span class="font-weight-bold">Category:</span> {{ $post->category->name }}</p>
+                                    <p class="card-text mb-0" style="font-size: 12px"><span class="font-weight-bold">Category:</span> {{ $post->categories->pluck('name')->implode(', ') }}</p>
                                 </div>
                                 <div class="d-flex align-items-center mb-0">
                                     <i class="fas fa-eye mr-2"></i>

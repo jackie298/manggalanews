@@ -39,7 +39,7 @@
                                                     <img src="{{ $news->image }}" alt="">
                                                 </div>
                                                 <div class="what-cap">
-                                                    <span class="color1">{{ $news->category->name }}</span>
+                                                    <span class="color1">{{ $news->categories->pluck('name')->implode(', ') }}</span>
                                                     <h4><a href="#">{{ $news->title }}</a></h4>
                                                 </div>
                                             </div>

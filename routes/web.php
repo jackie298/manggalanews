@@ -1,5 +1,5 @@
 <?php
-use Illuminate\Support\Facades\Artisan;
+
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\BreakingNewsController;
 use App\Http\Controllers\CategoryController;
@@ -29,34 +29,20 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/', function () {
 //     return view('layouts.home');
 // });
-Route::get('/storage-link', function () {
-    Artisan::call('storage:link');
-    return 'Storage link created successfully.';
-});
-Route::get('/storage/{filename}', function ($filename) {
-    $path = storage_path('app/public/post/' . $filename);
 
-    if (!File::exists($path)) {
-        abort(404);
-    }
+Route::get('/storage-link', function() {
+	$targetFolder = base_path().'/storage/app/public';
+	$linkFolder =  $_SERVER['DOCUMENT_ROOT'].'/storage';
 
-    $file = File::get($path);
-    $type = File::mimeType($path);
-
-    return response($file, 200)->header("Content-Type", $type);
+	if (!file_exists($linkFolder)) {
+		symlink($targetFolder, $linkFolder);
+		return "Storage link successfully created!";
+	} else {
+		return "Storage link already exists!";
+	}
 });
 
 
-
-Route::prefix('iklan')->name('iklan.')->middleware('auth')->group(function () {
-    Route::get('/', [IklanController::class, 'index'])->name('index');
-    Route::get('/tambah', [IklanController::class, 'create'])->name('create');
-    Route::post('/simpan', [IklanController::class, 'store'])->name('store');
-    Route::get('/{iklan}', [IklanController::class, 'show'])->name('show');
-    Route::get('/{iklan}/edit', [IklanController::class, 'edit'])->name('edit');
-    Route::put('/{iklan}/update', [IklanController::class, 'update'])->name('update');
-    Route::delete('/{iklan}/hapus', [IklanController::class, 'destroy'])->name('destroy');
-});
 Route::get('/', [Controller::class, 'home'])->name('home');
 Route::get('/postingan/{slug}', [Controller::class, 'detail'])->name('posts.show');
 Route::get('/tentang-kami', [Controller::class, 'about'])->name('about');
@@ -82,7 +68,7 @@ Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallb
 
     Route::prefix('manajemen-postingan')->group(function () {
         Route::get('/', [PostController::class, 'index'])->name('posts.index');
-        Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+        Route::get('/add', [PostController::class, 'create'])->name('posts.create');
         Route::post('/store', [PostController::class, 'store'])->name('posts.store');
         Route::get('/{post:slug}/edit', [PostController::class, 'edit'])->name('posts.edit');
         Route::put('/{post:slug}/update', [PostController::class, 'update'])->name('posts.update');
@@ -100,6 +86,16 @@ Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallb
         Route::get('/{slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
         Route::put('/{slug}/update', [CategoryController::class, 'update'])->name('categories.update');
         Route::delete('/{slug}/delete', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    });
+
+    Route::prefix('iklan')->name('iklan.')->middleware('auth')->group(function () {
+        Route::get('/', [IklanController::class, 'index'])->name('index');
+        Route::get('/tambah', [IklanController::class, 'create'])->name('create');
+        Route::post('/simpan', [IklanController::class, 'store'])->name('store');
+        Route::get('/{iklan}', [IklanController::class, 'show'])->name('show');
+        Route::get('/{iklan}/edit', [IklanController::class, 'edit'])->name('edit');
+        Route::put('/{iklan}/update', [IklanController::class, 'update'])->name('update');
+        Route::delete('/{iklan}/hapus', [IklanController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('breaking-news')->group(function () {

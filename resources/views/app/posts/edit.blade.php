@@ -17,6 +17,15 @@
                     <h4 class="card-title">Edit Post</h4>
                     <p class="card-description">Edit post</p>
                     <form class="forms-sample" action="{{ route('posts.update', $post->slug) }}" method="post" enctype="multipart/form-data">
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -47,17 +56,18 @@
                         </div>
                         <div class="form-group">
                             <label for="postCategory">Kategori</label>
-                            <select class="form-control" name="category_id" id="postCategory">
-                                <option value="">- Select Category -</option>
+                            <select class="form-control" name="category_ids[]" id="postCategory" multiple>
                                 @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ $post->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}"
+                                        {{ (collect(old('category_ids', $post->categories->pluck('id')->toArray()))->contains($category->id)) ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
                                 @endforeach
                             </select>
-                            @error('category_id')
-                            <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                            @error('category_ids')
+                                <span style="color: red; font-size: 12px;">{{ $message }}</span>
                             @enderror
                         </div>
-                        
                         <div class="form-group">
                             <label for="postBody">Konten</label>
                             <textarea class="form-control" name="body" id="postBody" placeholder="Body" rows="10">{{ $post->body }}</textarea>

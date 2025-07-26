@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="{{ asset('app/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('app/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('app/vendors/css/vendor.bundle.base.css') }}">
+    <!-- Versi terbaru Material Design Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/css/materialdesignicons.min.css" rel="stylesheet">
+
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <link rel="stylesheet" href="{{ asset('app/vendors/jquery-bar-rating/css-stars.css') }}" />

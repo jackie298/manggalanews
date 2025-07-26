@@ -41,7 +41,11 @@
                               @endif
                             </td>
                             <td>{{ $post->title }}</td>
-                            <td>{{ $post->category->name }}</td>
+                            <td>
+                              @foreach ($post->categories as $kategori)
+                                  <span class="badge bg-warning">{{ $kategori->name }}</span>
+                              @endforeach
+                            </td>
                             <td>{{ $post->user->name }}</td>
                             <td>{{ $post->created_at->format('d, M, Y') }}</td>
                             <td>{{ $post->updated_at->format('d, M, Y') }}</td>

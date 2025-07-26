@@ -31,7 +31,9 @@
                             <div class="trend-top-img">
                                 <img src="{{ asset($firstPost->image) }}" alt="{{ $firstPost->title }}">
                                 <div class="trend-top-cap">
-                                    <span>{{ $firstPost->category->name }}</span>
+                                    @foreach ($firstPost->categories as $category)
+                                        <span class="color1">{{ $category->name }}</span>
+                                    @endforeach
                                     <h2><a href="{{ route('posts.show', $firstPost->slug) }}">{{ $firstPost->title }}</a></h2>
                                 </div>
                             </div>
@@ -48,7 +50,9 @@
                                             <img src="{{ asset($secondPost->image) }}" alt="{{ $secondPost->title }}" style="width: 100%; object-fit: cover; height: 100px;">
                                         </div>
                                         <div class="trend-bottom-cap">
-                                            <span class="color1">{{ $secondPost->category->name }}</span>
+                                            @foreach ($secondPost->categories as $category)
+                                                <span class="badge bg-primary">{{ $category->name }}</span>
+                                            @endforeach
                                             <h4><a href="{{ route('posts.show', $secondPost->slug) }}">{{ $secondPost->title }}</a></h4>
                                         </div>
                                     </div>
@@ -65,7 +69,9 @@
                                     <img src="{{ asset($thirdPost->image) }}" alt="{{ $thirdPost->title }}" width="150" height="100">
                                 </div>
                                 <div class="trand-right-cap">
-                                    <span class="color1">{{ $thirdPost->category->name }}</span>
+                                    @foreach ($thirdPost->categories as $category)
+                                        <span class="badge bg-primary">{{ $category->name }}</span>
+                                    @endforeach
                                     <h4><a href="{{ route('posts.show', $thirdPost->slug) }}">{{ $thirdPost->title }}</a></h4>
                                 </div>
                             </div>
@@ -78,37 +84,39 @@
     <!-- Trending Area End -->
 
     <!--  Berita Berdasarkan Kategori -->
-    <!--<div class="weekly-news-area pt-50">-->
-    <!--    <div class="container">-->
-    <!--       <div class="weekly-wrapper">-->
-    <!--             section Tittle -->
-    <!--            <div class="row">-->
-    <!--                <div class="col-lg-12">-->
-    <!--                    <div class="section-tittle mb-30">-->
-    <!--                        <h3>Berita Populer</h3>-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--            <div class="row">-->
-    <!--                <div class="col-12">-->
-    <!--                    <div class="weekly-news-active dot-style d-flex dot-style">-->
-    <!--                        @foreach ($mostViews as $mostView)-->
-    <!--                        <div class="weekly-single">-->
-    <!--                            <div class="weekly-img">-->
-    <!--                                <img src="{{ Storage::url($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">-->
-    <!--                            </div>-->
-    <!--                            <div class="weekly-caption">-->
-    <!--                                <span class="color1">{{ $mostView->category->name }}</span>-->
-    <!--                                <h4><a href="{{ route('posts.show', $mostView->slug) }}">{{ $mostView->title }}</a></h4>-->
-    <!--                            </div>-->
-    <!--                        </div>-->
-    <!--                        @endforeach-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--       </div>-->
-    <!--    </div>-->
-    <!--</div>-->
+    <div class="weekly-news-area pt-50">
+        <div class="container">
+           <div class="weekly-wrapper">
+                <!-- section Tittle -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-tittle mb-30">
+                            <h3>Berita Populer</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="weekly-news-active dot-style d-flex dot-style">
+                            @foreach ($mostViews as $mostView)
+                            <div class="weekly-single">
+                                <div class="weekly-img">
+                                    <img src="{{ asset($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">
+                                </div>
+                                <div class="weekly-caption">
+                                    @foreach ($mostView->categories as $category)
+                                        <span class="badge bg-primary">{{ $category->name }}</span>
+                                    @endforeach
+                                    <h4><a href="{{ route('posts.show', $mostView->slug) }}">{{ $mostView->title }}</a></h4>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </div>
+    </div>
     <!-- End Weekly-News -->
 
    <!-- Whats New Start -->
@@ -148,7 +156,9 @@
                                                     <img src="{{ $news->image }}" alt="">
                                                 </div>
                                                 <div class="what-cap">
-                                                    <span class="color1">{{ $news->category->name }}</span>
+                                                    <span class="color1">
+                                                        {{ $news->categories->pluck('name')->implode(', ') }}
+                                                    </span>
                                                     <h4><a href="#">{{ $news->title }}</a></h4>
                                                 </div>
                                             </div>

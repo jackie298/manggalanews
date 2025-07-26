@@ -30,7 +30,7 @@ class Controller extends BaseController
 
 
         $categories = Category::latest()->get();
-        $allNews = $categories->pluck('posts')->flatten()->sortByDesc('created_at')->values();
+        $allNews = Post::with('categories')->latest()->get();
 
         $latest_posts = Post::latest()->take(6)->get();
 

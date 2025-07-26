@@ -40,13 +40,13 @@ class PostController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'required|max:150',
             'body' => 'required|max:10000',
-            'category_id' => 'required'
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:categories,id',
         ]);
 
         $post = new Post();
         $post->title = $validatedData['title'];
         $post->body = $validatedData['body'];
-        $post->category_id = $validatedData['category_id'];
         $post->user_id = Auth::id();
 
         if ($request->hasFile('image')) {
@@ -57,8 +57,10 @@ class PostController extends Controller
         }
 
         $post->slug = Str::slug($validatedData['title'], '-');
-
         $post->save();
+
+        // Simpan relasi kategori ke tabel pivot
+        $post->categories()->attach($validatedData['category_ids']);
 
         return redirect()->route('posts.index')->with('success', 'Postingan berhasil dipublish');
     }
@@ -76,13 +78,15 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'required|max:150',
             'body' => 'required|max:10000',
-            'category_id' => 'required'
+            'category_ids' => 'required|array',
+            'category_ids.*' => 'exists:categories,id',
+
         ]);
 
         $post = Post::where('slug', $slug)->firstOrFail();
         $post->title = $validatedData['title'];
         $post->body = $validatedData['body'];
-        $post->category_id = $validatedData['category_id'];
+        $post->categories()->sync($validatedData['category_ids']);
         $post->updated_at = now();
 
         if ($request->hasFile('image')) {
