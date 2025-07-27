@@ -33,6 +33,15 @@ class CategoryController extends Controller
 
     }
 
+    public function show($slug)
+    {
+        $category = Category::where('slug', $slug)->firstOrFail();
+        $posts = $category->posts()->latest()->paginate(10);
+
+        $latest_posts = Post::latest()->take(5)->get(); // Tambahkan ini
+
+        return view('home.categori-show', compact('category', 'posts', 'latest_posts'));
+    }
 
 
     public function edit($slug)
@@ -90,7 +99,7 @@ class CategoryController extends Controller
         }
 
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'name' => 'required|max:255',
         ]);
 
@@ -98,11 +107,10 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->slug = Str::slug($request->name);
 
-        $image = $request->file('image');
-        $imageName = time() . '.' . $image->getClientOriginalExtension();
-        $imagePath = $image->storeAs('public/categories', $imageName);
-
-        $category->image = Storage::url($imagePath);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $category->image = $imagePath;
+        }
 
         $category->save();
 

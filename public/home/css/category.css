@@ -1,0 +1,28 @@
+.category-bar-wrapper {
+    background: linear-gradient(to right, #1a2980, #26d0ce);
+    padding: 8px 0;
+    border-radius: 5px;
+}
+
+.category-bar {
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.category-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.category-item {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin: 0 15px;
+    transition: color 0.3s;
+    flex-shrink: 0;
+}
+
+.category-item:hover {
+    color: #ffcc00;
+}

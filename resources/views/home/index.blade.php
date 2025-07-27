@@ -23,8 +23,20 @@
         <div class="container">
             <div class="trending-main">
                 <!-- Trending Tittle -->
-                <div class="row">
-                    <div class="col-lg-8">
+                         <div class="bg-gradient-category text-white py-2 px-3 rounded d-flex align-items-center mb-3">
+                            <div class="trending-label mr-3">
+                                🔴 <strong>Trending Now:</strong>
+                            </div>
+                            <div class="breaking-news-scroll flex-grow-1 overflow-hidden position-relative">
+                                <div class="scrolling-text d-inline-block">
+                                    @foreach($breakingNews as $news)
+                                        <a href="{{ route('posts.show', $news->slug) }}" class="text-white mr-5">
+                                            {{ $news->title }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
                         <!-- First Post -->
                         @if($firstPost)
                         <div class="trending-top mb-30">
@@ -61,26 +73,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Thirt Post -->
-                    <div class="col-lg-4">
-                        @foreach ($thirdPosts as $thirdPost)
-                            <div class="trand-right-single d-flex">
-                                <div class="trand-right-img">
-                                    <img src="{{ asset($thirdPost->image) }}" alt="{{ $thirdPost->title }}" width="150" height="100">
-                                </div>
-                                <div class="trand-right-cap">
-                                    @foreach ($thirdPost->categories as $category)
-                                        <span class="badge bg-primary">{{ $category->name }}</span>
-                                    @endforeach
-                                    <h4><a href="{{ route('posts.show', $thirdPost->slug) }}">{{ $thirdPost->title }}</a></h4>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Trending Area End -->
 
     <!--  Berita Berdasarkan Kategori -->
@@ -123,74 +115,53 @@
     <section class="whats-news-area pt-50 pb-20">
         <div class="container">
             <div class="row">
-                 <div class="col-lg-8">
-                <div class="row d-flex justify-content-between">
-                    <div class="col-lg-3 col-md-3">
-                        <div class="section-tittle mb-30">
-                            <h3>Kategori Berita</h3>
-                        </div>
-                    </div>
-                    <div class="col-lg-9 col-md-9">
-                        <div class="properties__button">
-                            <nav>
-                                <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">All</a>
-                                    @foreach($categories as $category)
-                                    <a class="nav-item nav-link" id="nav-{{ $category->id }}-tab" data-toggle="tab" href="#nav-{{ $category->id }}" role="tab" aria-controls="nav-{{ $category->id }}" aria-selected="false">{{ $category->name }}</a>
-                                    @endforeach
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                <div class="whats-news-caption">
-                                    <div class="row">
-                                        @foreach($allNews->take(4) as $news)
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="single-what-news mb-100">
-                                                <div class="what-img">
-                                                    <img src="{{ $news->image }}" alt="">
-                                                </div>
-                                                <div class="what-cap">
-                                                    <span class="color1">
-                                                        {{ $news->categories->pluck('name')->implode(', ') }}
-                                                    </span>
-                                                    <h4><a href="#">{{ $news->title }}</a></h4>
-                                                </div>
+                <div class="col-lg-8">
+                    @foreach($categories as $category)
+                    @php $posts = $category->posts->take(4); @endphp
+                    @if($posts->isNotEmpty())
+                        <div class="mb-5" id="category-{{ $category->id }}">
+                            <h4 class="mb-3 font-weight-bold">{{ $category->name }}</h4>
+
+                            @foreach($posts as $news)
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <a href="{{ route('posts.show', $news->slug) }}">
+                                            <img src="{{ asset($news->image) }}" class="img-fluid rounded" style="height: 180px; object-fit: cover; width: 100%;" alt="{{ $news->title }}">
+                                        </a>
+                                    </div>
+                                    <div class="col-md-8 d-flex flex-column justify-content-between">
+                                        <div>
+                                            {{-- Badge kategori --}}
+                                            <div class="mb-1">
+                                                @foreach($news->categories as $cat)
+                                                    <span class="badge bg-primary text-white">{{ $cat->name }}</span>
+                                                @endforeach
                                             </div>
+
+                                            {{-- Judul berita --}}
+                                            <h5>
+                                                <a href="{{ route('posts.show', $news->slug) }}" class="post-link text-dark">
+                                                    {{ $news->title }}
+                                                </a>
+                                            </h5>
                                         </div>
-                                        @endforeach
+
+                                        {{-- Tanggal --}}
+                                        <small class="text-muted">{{ $news->created_at->diffForHumans() }}</small>
                                     </div>
                                 </div>
-                            </div>
-                            @foreach($categories as $category)
-                            <div class="tab-pane fade" id="nav-{{ $category->id }}" role="tabpanel" aria-labelledby="nav-{{ $category->id }}-tab">
-                                <div class="whats-news-caption">
-                                    <div class="row">
-                                        @foreach($category->posts->take(4) as $news)
-                                        <div class="col-lg-6 col-md-6">
-                                            <div class="single-what-news mb-100">
-                                                <div class="what-img">
-                                                    <img src="{{ $news->image }}" alt="">
-                                                </div>
-                                                <div class="what-cap">
-                                                    <span class="color1">{{ $category->name }}</span>
-                                                    <h4><a href="#">{{ $news->title }}</a></h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
                             @endforeach
+
+                            {{-- Tombol Selengkapnya --}}
+                            <div class="mt-2 text-right">
+                                <a href="{{ route('categories.show', $category->slug) }}" class="btn btn-sm btn-outline-primary">
+                                    Selengkapnya →
+                                </a>
+                            </div>
+                            <hr>
                         </div>
-                    </div>
-                </div>
+                    @endif
+                @endforeach
             </div>
             <div class="col-lg-4">
                 <!-- Section Tittle -->
@@ -240,7 +211,7 @@
                 </div>
                 <!-- New Poster -->
                 <div class="news-poster d-none d-lg-block">
-                    <img src="{{ asset('home/img/news/news_card.jpg') }}" alt="">
+                    @include('app.partials.ads', ['position' => 'home'])
                 </div>
             </div>
             </div>
@@ -322,4 +293,46 @@
     <!-- End Start youtube -->
 
 </main>
+
+<style>
+    .trending-label {
+        white-space: nowrap;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .breaking-news-scroll {
+        overflow: hidden;
+        position: relative;
+        max-width: 100%; /* biar tidak lebih dari container */
+    }
+
+    .scrolling-text {
+        display: inline-block;
+        white-space: nowrap;
+        animation: scroll-left 40s linear infinite;
+    }
+
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(200%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+
+    .breaking-news-scroll:hover .scrolling-text {
+        animation-play-state: paused;
+    }
+
+    .bg-gradient-category {
+        background: linear-gradient(to right, #1a2980, #26d0ce);
+    }
+
+    .whats-news-area h5 a:hover {
+        color: #f7a000;
+        text-decoration: underline;
+    }
+</style>
 @endsection

@@ -47,6 +47,8 @@ Route::get('/', [Controller::class, 'home'])->name('home');
 Route::get('/postingan/{slug}', [Controller::class, 'detail'])->name('posts.show');
 Route::get('/tentang-kami', [Controller::class, 'about'])->name('about');
 Route::get('/kategori-berita', [Controller::class, 'categories'])->name('categories');
+Route::get('/kategori/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+
 
 Route::get('/auth', [UserController::class, 'auth'])->name('login');
 Route::post('/auth/login', [UserController::class, 'login'])->name('login.submit');

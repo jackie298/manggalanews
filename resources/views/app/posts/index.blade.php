@@ -22,6 +22,7 @@
                         <thead>
                           <tr>
                             <th>Gambar</th>
+                            <th>Keterangan Gambar</th>
                             <th>Judul</th>
                             <th>Kategori</th>
                             <th>Author</th>
@@ -40,10 +41,11 @@
                                 No image
                               @endif
                             </td>
+                            <td>{{ $post->caption }}</td>
                             <td>{{ $post->title }}</td>
                             <td>
                               @foreach ($post->categories as $kategori)
-                                  <span class="badge bg-warning">{{ $kategori->name }}</span>
+                                  <span class="badge bg-info">{{ $kategori->name }}</span>
                               @endforeach
                             </td>
                             <td>{{ $post->user->name }}</td>

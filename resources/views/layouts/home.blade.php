@@ -24,7 +24,9 @@
             <link rel="stylesheet" href="{{ asset('home/css/slick.css') }}">
             <link rel="stylesheet" href="{{ asset('home/css/nice-select.css') }}">
             <link rel="stylesheet" href="{{ asset('home/css/style.css') }}">
+            {{-- costum css --}}
             <link rel="stylesheet" href="{{ asset('home/css/ads.css') }}">
+            <link rel="stylesheet" href="{{ asset('home/css/category.css') }}">
 
         <!-- icon FA CDN -->
 

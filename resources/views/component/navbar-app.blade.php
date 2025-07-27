@@ -57,32 +57,31 @@
                 </ul>
             </div>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#iklan" aria-expanded="false"
-                aria-controls="iklan">
-                <i class="mdi mdi-advertisements menu-icon"></i>
-                <span class="menu-title">Iklan</span>
-                <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="iklan">
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('iklan.index') }}">List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('iklan.create') }}">Tambah</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-
         @can('admin-fitur')
-            {{-- <li class="nav-item">
-            <a class="nav-link" href="{{ route('breaking-news.index') }}">
-              <i class="mdi mdi-trending-up menu-icon"></i>
-              <span class="menu-title">Trending</span>
-            </a>
-          </li> --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('breaking-news.index') }}">
+                <i class="mdi mdi-trending-up menu-icon"></i>
+                <span class="menu-title">Trending</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#iklan" aria-expanded="false"
+                    aria-controls="iklan">
+                    <i class="mdi mdi-advertisements menu-icon"></i>
+                    <span class="menu-title">Iklan</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="iklan">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('iklan.index') }}">List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('iklan.create') }}">Tambah</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" data-toggle="collapse" href="#collapseUser" aria-expanded="false">
                     <i class="mdi mdi-account menu-icon"></i>

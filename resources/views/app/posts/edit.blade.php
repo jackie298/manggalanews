@@ -48,6 +48,14 @@
                             @enderror
                         </div>
                         <div class="form-group">
+                            <label for="postCaption">Keterangan Gambar</label>
+                            <input type="text" class="form-control" name="caption" id="postCaption" placeholder="Contoh: Aksi demonstrasi di Jakarta"
+                                value="{{ old('caption', $post->caption) }}">
+                            @error('caption')
+                            <span style="color: red; font-size: 12px;">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label for="postTitle">Judul</label>
                             <input type="text" class="form-control" name="title" id="postTitle" placeholder="Title" value="{{ $post->title }}" />
                             @error('title')

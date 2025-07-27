@@ -34,7 +34,11 @@ class Controller extends BaseController
 
         $latest_posts = Post::latest()->take(6)->get();
 
-        $breakingNews = Post::whereHas('breakingNews')->get();
+        $breakingNews = Post::whereHas('breakingNews')
+            ->latest()
+            ->take(10)
+            ->get();
+
 
         $mostViews = Post::orderBy('views', 'desc')->take(6)->get();
 
@@ -65,17 +69,28 @@ class Controller extends BaseController
     public function detail($slug)
     {
         $breakingNews = Post::whereHas('breakingNews')->get();
-        $post = Post::where('slug', $slug)->first();
+        $post = Post::where('slug', $slug)->with('categories')->firstOrFail();
         $latest_posts = Post::latest()->take(6)->get();
 
+        // Tambah view count jika post ditemukan
         if ($post) {
             $post->increment('views');
         }
+
+        // Ambil berita terkait berdasarkan kategori yang sama
+        $related_posts = Post::whereHas('categories', function ($query) use ($post) {
+            $query->whereIn('categories.id', $post->categories->pluck('id'));
+        })
+        ->where('id', '!=', $post->id)
+        ->latest()
+        ->take(5)
+        ->get();
 
         return view('home.post-detail', [
             'post' => $post,
             'breakingNews' => $breakingNews,
             'latest_posts' => $latest_posts,
+            'relatedPosts' => $related_posts,
         ]);
     }
 

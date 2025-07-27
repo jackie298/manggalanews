@@ -31,6 +31,24 @@
                     </a>
             @endif
         </div>
+    @elseif ($position === 'home')
+        <div class="ad ad-sidebar">
+            <!-- Konten iklan sidebar -->
+            @if ($iklan->image)
+                    <a href="{{ $iklan->content }}" class="d-block mb-2" target="_blank" rel="noopener">
+                        <img src="{{ asset('storage/' . $iklan->image) }}" alt="Gambar Iklan" style="width: 200px;">
+                    </a>
+            @endif
+        </div>
+    @elseif ($position === 'newsads')
+        <div class="ad ad-sidebar">
+            <!-- Konten iklan sidebar -->
+            @if ($iklan->image)
+                    <a href="{{ $iklan->content }}" class="d-block mb-2" target="_blank" rel="noopener">
+                        <img src="{{ asset('storage/' . $iklan->image) }}" alt="Gambar Iklan" style="width: 200px;">
+                    </a>
+            @endif
+        </div>
     @elseif ($position === 'footer')
         <div class="ad ad-footer">
             <!-- Konten iklan footer -->
@@ -49,6 +67,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const headerAd = document.getElementById("header");
     const sidebarAd = document.getElementById("sidebar1");
     const sidebarAd = document.getElementById("sidebar2");
+    const sidebarAd = document.getElementById("home");
+    const sidebarAd = document.getElementById("newsads");
     const footerAd = document.getElementById("footer");
 
     // Fungsi untuk menampilkan pop-up

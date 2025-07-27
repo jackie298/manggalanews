@@ -11,6 +11,11 @@
                         <div class="card mb-3 shadow-sm">
                             <h4 class="card-title">{{ $post->title }}</h4>
                             <img class="card-img-top" src="{{ $post->image }}" alt="Post Image" style="height: 300px; object-fit: cover; border-radius: 10px 10px 0 0;">
+                            @if($post->caption)
+                                <small class="text-muted d-block mt-2">{{ $post->caption }}</small>
+                            @else
+                                <small class="text-muted d-block mt-2">{{ Str::limit(strip_tags($post->body), 100) }}</small>
+                            @endif
                             <div class="card-body" style="font-size: 12px">
                                 <div class="d-flex align-items-center mb-0 small">
                                     <i class="fas fa-user mr-2"></i>
@@ -35,6 +40,18 @@
                                     <p class="card-text mb-0" style="font-size: 10px"><span class="font-weight-bold">Views:</span> {{ $post->views }}</p>
                                 </div>
                                 <p class="card-text mt-3">{!! $post->body !!}</p>
+                                @if($relatedPosts->isNotEmpty())
+                                    <div class="mt-5 border-left pl-3" style="border-color: #dc3545;">
+                                        <p class="font-weight-bold mb-1">Baca juga:</p>
+                                        @foreach($relatedPosts as $related)
+                                            <p>
+                                                <a href="{{ route('posts.show', $related->slug) }}" style="color: #b80000; font-weight: bold; text-decoration: none;">
+                                                    {{ $related->title }}
+                                                </a>
+                                            </p>
+                                        @endforeach
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="social-share pt-30">
@@ -118,7 +135,7 @@
                 <div class="col-lg-4">
                     <!-- Advertisement -->
                     <div class="news-poster d-none d-lg-block">
-                        <img src="{{ asset('home/img/news/news_card.jpg') }}" alt="Advertisement">
+                        @include('app.partials.ads', ['position' => 'newsads'])
                     </div>
                 </div>
             </div>

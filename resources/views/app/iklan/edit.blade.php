@@ -45,6 +45,8 @@
                                 <option value="header" {{ old('position', $iklan->position) == 'header' ? 'selected' : '' }}>Header</option>
                                 <option value="sidebar1" {{ old('position', $iklan->position) == 'sidebar1' ? 'selected' : '' }}>Sidebar - Kiri</option>
                                 <option value="sidebar2" {{ old('position', $iklan->position) == 'sidebar2' ? 'selected' : '' }}>Sidebar - kanan</option>
+                                <option value="home" {{ old('position', $iklan->position) == 'sidebar2' ? 'selected' : '' }}>Halaman Utama</option>
+                                <option value="newsads" {{ old('position', $iklan->position) == 'sidebar2' ? 'selected' : '' }}>Halaman Berita</option>
                                 <option value="footer" {{ old('position', $iklan->position) == 'footer' ? 'selected' : '' }}>Footer</option>
                             </select>
                             <small class="text-muted">Pilih salah satu posisi untuk menampilkan iklan.</small>

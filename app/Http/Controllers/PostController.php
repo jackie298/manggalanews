@@ -40,13 +40,16 @@ class PostController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'required|max:150',
             'body' => 'required|max:10000',
+            'caption' => 'nullable|string|max:255',
             'category_ids' => 'required|array',
             'category_ids.*' => 'exists:categories,id',
+            
         ]);
 
         $post = new Post();
         $post->title = $validatedData['title'];
         $post->body = $validatedData['body'];
+        $post->caption = $validatedData['caption'] ?? null;
         $post->user_id = Auth::id();
 
         if ($request->hasFile('image')) {
@@ -78,6 +81,7 @@ class PostController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'required|max:150',
             'body' => 'required|max:10000',
+            'caption' => 'nullable|string|max:255',
             'category_ids' => 'required|array',
             'category_ids.*' => 'exists:categories,id',
 
@@ -86,6 +90,7 @@ class PostController extends Controller
         $post = Post::where('slug', $slug)->firstOrFail();
         $post->title = $validatedData['title'];
         $post->body = $validatedData['body'];
+        $post->caption = $validatedData['caption'] ?? null;
         $post->categories()->sync($validatedData['category_ids']);
         $post->updated_at = now();
 
