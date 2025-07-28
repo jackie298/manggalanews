@@ -95,4 +95,13 @@ class IklanController extends Controller
 
         return redirect()->route('iklan.index')->with('success', 'Iklan berhasil dihapus.');
     }
+    public function deactivate(Iklan $iklan)
+    {
+        $iklan->update(['is_active' => false]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Iklan berhasil dinonaktifkan.'
+        ]);
+    }
 }
