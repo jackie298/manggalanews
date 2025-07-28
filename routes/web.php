@@ -99,6 +99,7 @@ Route::get('login/google/callback', [GoogleController::class, 'handleGoogleCallb
         Route::put('/{iklan}/update', [IklanController::class, 'update'])->name('update');
         Route::delete('/{iklan}/hapus', [IklanController::class, 'destroy'])->name('destroy');
     });
+    Route::patch('iklan/{iklan}/deactivate', [IklanController::class, 'deactivate'])->name('iklan.deactivate');
 
     Route::prefix('breaking-news')->group(function () {
         Route::get('/', [BreakingNewsController::class, 'index'])->name('breaking-news.index');
