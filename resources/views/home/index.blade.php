@@ -27,13 +27,20 @@
                             <div class="trending-label mr-3">
                                 🔴 <strong>Trending Now:</strong>
                             </div>
-                            <div class="breaking-news-scroll flex-grow-1 overflow-hidden position-relative">
-                                <div class="scrolling-text d-inline-block">
-                                    @foreach($breakingNews as $news)
-                                        <a href="{{ route('posts.show', $news->slug) }}" class="text-white mr-5">
-                                            {{ $news->title }}
-                                        </a>
-                                    @endforeach
+                            <div class="breaking-news-scroll-wrapper">
+                                <div class="breaking-news-scroll">
+                                    <div class="scrolling-text">
+                                        @foreach($breakingNews as $news)
+                                            <a href="{{ route('posts.show', $news->slug) }}" class="text-white mr-5">
+                                                {{ $news->title }}
+                                            </a>
+                                        @endforeach
+                                        @foreach($breakingNews as $news) {{-- Duplikasi untuk loop halus --}}
+                                            <a href="{{ route('posts.show', $news->slug) }}" class="text-white mr-5">
+                                                {{ $news->title }}
+                                            </a>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -44,7 +51,9 @@
                                 <img src="{{ asset($firstPost->image) }}" alt="{{ $firstPost->title }}">
                                 <div class="trend-top-cap">
                                     @foreach ($firstPost->categories as $category)
-                                        <span class="color1">{{ $category->name }}</span>
+                                        @if($category)
+                                            <span class="color1">{{ $category->name }}</span>
+                                        @endif
                                     @endforeach
                                     <h2><a href="{{ route('posts.show', $firstPost->slug) }}">{{ $firstPost->title }}</a></h2>
                                 </div>
@@ -63,7 +72,9 @@
                                         </div>
                                         <div class="trend-bottom-cap">
                                             @foreach ($secondPost->categories as $category)
-                                                <span class="badge bg-primary">{{ $category->name }}</span>
+                                                @if($category)
+                                                    <span class="badge bg-primary">{{ $category->name }}</span>
+                                                @endif
                                             @endforeach
                                             <h4><a href="{{ route('posts.show', $secondPost->slug) }}">{{ $secondPost->title }}</a></h4>
                                         </div>
@@ -76,7 +87,48 @@
     <!-- Trending Area End -->
 
     <!--  Berita Berdasarkan Kategori -->
+    <!--<div class="weekly-news-area pt-50">-->
+    <!--    <div class="container">-->
+    <!--       <div class="weekly-wrapper">-->
+                 <!--section Tittle -->
+    <!--            <div class="row">-->
+    <!--                <div class="col-lg-12">-->
+    <!--                    <div class="section-tittle mb-30">-->
+    <!--                        <h3>Berita Populer</h3>-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--            <div class="row">-->
+    <!--                <div class="col-12">-->
+    <!--                    <div class="weekly-news-active dot-style d-flex dot-style">-->
+    <!--                        @foreach ($mostViews as $mostView)-->
+    <!--                        <div class="weekly-single">-->
+    <!--                            <div class="weekly-img">-->
+    <!--                                <img src="{{ Storage::url($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">-->
+    <!--                            </div>-->
+    <!--                            <div class="weekly-caption">-->
+    <!--                                @foreach ($mostView->categories as $category)
+                                            @if($category)
+                                                <span class="badge bg-primary">{{ $category->name }}</span>
+                                            @endif
+                                        @endforeach
+    <!--                                <h4><a href="{{ route('posts.show', $mostView->slug) }}">{{ $mostView->title }}</a></h4>-->
+    <!--                            </div>-->
+    <!--                        </div>-->
+    <!--                        @endforeach-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--       </div>-->
+    <!--    </div>-->
+    <!--</div>-->
+    <!-- End Weekly-News -->
+
+   <!-- Whats New Start -->
+    <section class="whats-news-area pt-50 pb-20">
+
     <div class="weekly-news-area pt-50">
+
         <div class="container">
            <div class="weekly-wrapper">
                 <!-- section Tittle -->
@@ -96,8 +148,10 @@
                                     <img src="{{ asset($mostView->image) }}" alt="{{ $mostView->title }}" width="150" height="200" style="object-fit: cover;">
                                 </div>
                                 <div class="weekly-caption">
-                                    @foreach ($mostView->categories as $category)
-                                        <span class="badge bg-primary">{{ $category->name }}</span>
+                                   @foreach ($mostView->categories as $category)
+                                        @if($category)
+                                            <span class="badge bg-primary">{{ $category->name }}</span>
+                                        @endif
                                     @endforeach
                                     <h4><a href="{{ route('posts.show', $mostView->slug) }}">{{ $mostView->title }}</a></h4>
                                 </div>
@@ -295,44 +349,41 @@
 </main>
 
 <style>
-    .trending-label {
-        white-space: nowrap;
-        margin-right: 15px;
-        flex-shrink: 0;
-    }
-
-    .breaking-news-scroll {
+   .breaking-news-scroll-wrapper {
         overflow: hidden;
-        position: relative;
-        max-width: 100%; /* biar tidak lebih dari container */
+        padding-left: 15px; /* sesuai container */
+        padding-right: 15px;
     }
-
+    
+    .breaking-news-scroll {
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+    
     .scrolling-text {
         display: inline-block;
         white-space: nowrap;
-        animation: scroll-left 40s linear infinite;
+        animation: scroll-left 60s linear infinite;
     }
-
+    
     @keyframes scroll-left {
         0% {
-            transform: translateX(200%);
+            transform: translateX(0%); /* Mulai dari posisi awal di dalam margin */
         }
         100% {
-            transform: translateX(-100%);
+            transform: translateX(-50%); /* Hanya geser sampai tengah isi duplikat */
         }
     }
-
+    
     .breaking-news-scroll:hover .scrolling-text {
         animation-play-state: paused;
     }
-
+    
     .bg-gradient-category {
         background: linear-gradient(to right, #1a2980, #26d0ce);
+        color: #fff;
     }
 
-    .whats-news-area h5 a:hover {
-        color: #f7a000;
-        text-decoration: underline;
-    }
 </style>
 @endsection
